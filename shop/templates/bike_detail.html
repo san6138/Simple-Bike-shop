@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail of Bike</title>
+</head>
+<body>
+        <h2>{{object.name}}</h2>
+        <p>frame: {{object.frame.color}}</p>
+        <p>seat: {{object.seat.color}}</p>
+        <p>tires: {{object.tire.type}}</p>
+        {% if object.has_basket %}
+            <p>basket: yes</p>
+        {% else %}
+            <p>basket: no</p>
+        {% endif %}
+        <p>description: {{object.description}}</p>
+        <br>
+        <br>
+        {% if form %}
+            <h2>If you want to order the bike, fill in the form below:</h2>
+            <form method="post" action="{% url 'order-list' %}">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="text" name="bike_id" value="{{object.id}}" style="display: none;">
+                <button type="submit">Order</button>
+            </form>
+        {% else %}
+            <p><b>Unfortunately, this bike is currently not available.</b></p>
+        {% endif %}
+
+</body>
+</html>
